@@ -26,7 +26,7 @@ if __name__ == "__main__":
     parser.add_argument("--logging_steps", type=int, default=100) 
     
     # Push to Hub Parameters
-    parser.add_argument("--push_to_hub", type=bool, default=True)
+    parser.add_argument("--push_to_hub", type=bool, default=False)
     parser.add_argument("--hub_model_id", type=str, default=None)
     parser.add_argument("--hub_strategy", type=str, default=None)
     parser.add_argument("--hub_token", type=str, default=None)
@@ -63,6 +63,13 @@ if __name__ == "__main__":
         handlers=[logging.StreamHandler(sys.stdout)],
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
+    
+    # Get the list of files and directories in the specified directory
+    content = os.listdir(args.training_dir)
+
+    # Print the content of the directory
+    for item in content:
+        print(item)
 
     # load datasets
     train_dataset = load_from_disk(args.training_dir)
@@ -105,10 +112,10 @@ if __name__ == "__main__":
         disable_tqdm=args.disable_tqdm,
         logging_steps=args.logging_steps,
         # push to hub parameters
-        push_to_hub=args.push_to_hub,
-        hub_strategy=args.hub_strategy,
-        hub_model_id=args.hub_model_id,
-        hub_token=args.hub_token,
+        # push_to_hub=args.push_to_hub,
+        # hub_strategy=args.hub_strategy,
+        # hub_model_id=args.hub_model_id,
+        # hub_token=args.hub_token,
         save_strategy="epoch",
         save_total_limit=2,
         logging_dir=f"{args.output_data_dir}/logs",
